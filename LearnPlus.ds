@@ -1,0 +1,1731 @@
+/*
+ * Author       : ashwinkumar.rs_zohotest
+ * Generated on : 06-Feb-2023 19:08:41
+ * Version      : 1.0
+ */
+ application "LearnPlus"
+ {
+ 	date format = "dd-MMM-yyyy"
+ 	time zone = "Asia/Kolkata"
+ 	time format = "24-hr"
+ 	section Candidates
+	{
+		icon = "education-award-55"
+		default list All_Candidates
+		{
+			displayName = "Candidate Lists and Submissions"
+   			hide = true
+			show all rows from Submit_Task    
+			(
+				Name 
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Email
+				Submission_Date as "Submission Date "
+				File_upload as "File upload"
+				Added_Time as "Added Time"
+				Candidate_Username as "Username"
+				Day_Number as "Day Number"
+				Week_Number as "Week Number"
+				Task_Number as "Task Number"
+			)
+			options
+			(
+				icon = "travel-world"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Name
+							Email
+							Submission_Date as "Submission Date "
+							File_upload as "File upload"
+							Added_Time as "Added Time"
+							Candidate_Username as "Username"
+							Week_Number as "Week Number"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Name
+							Email
+							Submission_Date as "Submission Date "
+							File_upload as "File upload"
+							Candidate_Username as "Username"
+							Day_Number as "Day Number"
+							Week_Number as "Week Number"
+							Task_Number as "Task Number"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+		form Submit_Task
+		{
+			displayname = "Submit Task"
+			success message = "Tasks Submitted Successfully"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Name
+			(
+    			type = name
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Your proper as per attendance"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Candidate_Username
+			(
+    			type = picklist
+				displayname = "Username"
+				module = users
+				displayformat = [username]
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Choose your username"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Week_Number
+			(
+				type = number
+				displayname = "Week Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the week number mentioned in the respective task list"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Day_Number
+			(
+				type = number
+				displayname = "Day Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the day number mentioned in the respective task list"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Task_Number
+			(
+				type = number
+				displayname = "Task Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Submission_Date
+			(
+    			type = date
+				displayname = "Submission Date "
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have File_upload
+			(
+    			type = upload file
+				displayname = "File upload"
+				browse = local_drive, google_docs, zoho_docs
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "design-todo"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+	}
+	section Tasks
+	{
+		icon = "design-bullet-list-68"
+		form Task_Entries
+		{
+			displayname = "Task Entries"
+			success message = "Task Added Successfully"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Week_Detail
+			(
+    			type = text
+				displayname = "Week Detail"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the week number like 1, 2 etc.,"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Day_Detail
+			(
+    			type = text
+				displayname = "Day Detail"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the Day details like Day 1, 2, etc .,"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Task_name
+			(
+    			type = text
+				displayname = "Task Number"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Due_Date
+			(
+    			type = date
+				displayname = "Due Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Instructions
+			(
+    			type = richtext
+				height = 200px
+				toolbar = enable
+				[
+					style, font-color, background-color, alignment, link, table, bullets-and-numbering, 
+					font-size : {1, 2, 3, 4, 5, 6, 7},
+					font-family : {"Serif", "Arimo", "Ptmono", "Heuristica", "OpenSans", "Tinos", "Lato", "DejaVuSans", "ComicNeue", "EBGaramond", "RobotoCondensed", "ArchivoBlack", "Carlito"}
+				]
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Give the mandatory Instructions"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have File_upload
+			(
+    			type = upload file
+				displayname = "File upload"
+				browse = local_drive, google_docs, zoho_docs
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Score
+			(
+				type = number
+				initial value = 15
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Give score as 15"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Faculty_Name
+			(
+    			type = picklist
+				displayname = "Faculty Name"
+				module = users
+				displayformat = [username]
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Choose your user name"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+	
+			customize
+			(
+				icon = "business-notes"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		default list All_Faculties
+		{
+			displayName = "All Faculties"
+   			hide = true
+			show all rows from Task_Entries    
+			(
+				Task_name as "Task Number"
+				Due_Date as "Due Date"
+				File_upload as "File upload"
+				Instructions
+				Faculty_Name as "Faculty Name"
+				Score
+				Week_Detail as "Week Detail"
+				Day_Detail as "Day Detail"
+			)
+			options
+			(
+				icon = "travel-world"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Task_name as "Task Number"
+							Due_Date as "Due Date"
+							File_upload as "File upload"
+							Instructions
+							Faculty_Name as "Faculty Name"
+							Score
+							Week_Detail as "Week Detail"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Task_name as "Task Number"
+							Due_Date as "Due Date"
+							File_upload as "File upload"
+							Instructions
+							Faculty_Name as "Faculty Name"
+							Score
+							Week_Detail as "Week Detail"
+							Day_Detail as "Day Detail"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+				 page Task_Lists 
+	 	 { 
+ 	 	 displayname = "Task Lists"
+
+ 	 	 icon = "shopping-receipt-list-43" 
+	 	 Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<panel elementName=\"Panel\"\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = 'transparent'\n\n\t\twidth = '50%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'right'\n>\n\t<text \n\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\n\n\t  \n\t  value = 'Task Lists'\n>\n<\/text>\n\n<\/pc>\n<\/pr>\n<\/pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n\n\t\twidth = '50%'\n\t\thAlign = 'center'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginTop = '3px'\n\tcolor = '#00D9B1'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\t  \n\t  value = 'thisapp.Task_Entries.ID.count'\n>\n<\/text>\n\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/panel>\n<\/column>\n<\/row><row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<report \n\telementName=\"Report 1\"\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'All_Faculties'\n\t\n\t\tiszreport = 'false'\n\t            zc_AddRec = 'false'\n\t            zc_EditRec = 'false'\n\t            zc_Print = 'false'\n\t            zc_Export = 'false'\n\t            zc_DelRec = 'false'\n\t            zc_DuplRec = 'false'\n\theightType = 'auto'\n\theightValue = '700'\n\n\/>\n<\/column>\n<\/row>\n<\/layout>\n<\/zml>" 
+ 	 	}
+				 page Task_Submissions 
+	 	 { 
+ 	 	 displayname = "Task Submissions"
+
+ 	 	 icon = "design-todo" 
+	 	 Content="<zml    \t\t\n\t\t\n\t\t\n\t\t\n\t\t\n>\n\t<layout>\n\t<row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<panel elementName=\"Panel\"\n \n >\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '0px'\n\tbgColor = '#FFFFFF'\n\n\t\twidth = '100%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='fill'\n\t\theight='fill'\n>\n\t<pc \n\t\tpadding = '20px'\n\tbgColor = 'transparent'\n\n\t\twidth = '50%'\n\t\thAlign = 'center'\n\t\tvAlign = 'middle'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n\t\thAlign = 'right'\n>\n\t<text \n\n\tcolor = '#333333'\n\tsize = '16px'\n\ttype = 'Text'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\n\n\t  \n\t  value = 'All submissions'\n>\n<\/text>\n\n<\/pc>\n<\/pr>\n<\/pc><pc \n\t\tpaddingTop = '17px'\n\tpaddingLeft = '0px'\n\tpaddingRight = '17px'\n\tpaddingBottom = '17px'\n\tbgColor = 'transparent'\n\n\t\twidth = '50%'\n\t\thAlign = 'center'\n>\n\t<pr \n\t\t\twidth='auto'\n\t\theight='auto'\n>\n\t<pc \n\t\n>\n\t<text \n\n\tmarginTop = '3px'\n\tcolor = '#00D9B1'\n\tsize = '36px'\n\tbold = 'true' \n\ttype = 'Form Data'\n\tbgColor = 'rgba(0, 0, 0, 0)'\n\n\tdisplayType = 'actual'\n\tthousandsSeperator = 'LOCALE'\n\tdecimalSeperator = 'DOT'\n\tnumberScale = 'none'\n\n\n\t  \n\t  value = 'thisapp.Submit_Task.ID.count'\n>\n<\/text>\n\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/pc>\n<\/pr>\n<\/panel>\n<\/column>\n<\/row><row>\n\t<column\n   \t\t width=\"100%\"\n   \t>\n\t<report \n\telementName=\"Report\"\n\n\t\tappLinkName = 'thisapp'\n\t\tlinkName = 'All_Candidates'\n\t\n\t\tiszreport = 'false'\n\t            zc_AddRec = 'false'\n\t            zc_EditRec = 'false'\n\t            zc_DelRec = 'false'\n\t            zc_DuplRec = 'false'\n\theightType = 'auto'\n\theightValue = '700'\n\n\/>\n<\/column>\n<\/row>\n<\/layout>\n<\/zml>" 
+ 	 	}
+	}
+	section Task_Lists
+	{
+		displayname= "Task Lists"
+		icon = "design-todo"
+	}
+	section Faculty_Evaluation_Reports
+	{
+		displayname= "Faculty Evaluation Reports"
+		icon = "business-laptop-71"
+		default list All_Evaluation_Reports
+		{
+			displayName = "All Evaluation Reports"
+   			hide = true
+			show all rows from Evaluation_Report    
+			(
+				Faculty_Name  as "Faculty Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Candidate_Name  as "Candidate Name"
+	 			(
+	      			displayformat = [first_name1+""+prefix1+""+last_name1+""+suffix1]
+	 			)
+				Week_Number as "Week Number"
+				Day_Number as "Day Number"
+				Task_Number as "Task Number"
+				Reporting_Date as "Reporting Date"
+				Comments
+				Task_Score as "Score"
+			)
+			options
+			(
+				icon = "travel-world"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Faculty_Name as "Faculty Name"
+							Candidate_Name as "Candidate Name"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Number as "Task Number"
+							Reporting_Date as "Reporting Date"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Faculty_Name as "Faculty Name"
+							Candidate_Name as "Candidate Name"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Number as "Task Number"
+							Reporting_Date as "Reporting Date"
+							Comments
+							Task_Score as "Score"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+		form Evaluation_Report
+		{
+			displayname = "Faculty - Task Evaluation Report"
+			success message = "Report Added Successfully"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Faculty_Name
+			(
+    			type = name
+				displayname = "Faculty Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Candidate_Name
+			(
+    			type = name
+				displayname = "Candidate Name"
+     			prefix1
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name1
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name1
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix1
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Week_Number
+			(
+				type = number
+				displayname = "Week Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the week number made in the respective task entry"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Day_Number
+			(
+				type = number
+				displayname = "Day Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the day number made in the respective task entry"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Task_Number
+			(
+				type = number
+				displayname = "Task Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the task number made in the respective task entry"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Reporting_Date
+			(
+    			type = date
+				displayname = "Reporting Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Comments
+			(
+    			type = richtext
+				height = 200px
+				toolbar = enable
+				[
+					style, font-color, background-color, alignment, link, table, bullets-and-numbering, 
+					font-size : {1, 2, 3, 4, 5, 6, 7},
+					font-family : {"Serif", "Arimo", "Ptmono", "Heuristica", "OpenSans", "Tinos", "Lato", "DejaVuSans", "ComicNeue", "EBGaramond", "RobotoCondensed", "ArchivoBlack", "Carlito"}
+				]
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Give your valid comments based on the evaluation criteria points"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Task_Score
+			(
+				type = number
+				displayname = "Score"
+				initial value = 15
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Give scores out of 15"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "education-board-51"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		spreadsheet Consolidate_Report
+		{
+			displayName = "Faculty - Tasks Consolidate Report"
+			show all rows from Evaluation_Report    
+			(
+				Faculty_Name  as "Faculty Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Candidate_Name  as "Candidate Name"
+	 			(
+	      			displayformat = [first_name1+""+prefix1+""+last_name1+""+suffix1]
+	 			)
+				Week_Number as "Week Number"
+				Day_Number as "Day Number"
+				Task_Number as "Task Number"
+				Reporting_Date as "Reporting Date"
+				Comments
+				Task_Score as "Score"
+				Added_Time as "Added Time"
+				Modified_User as "Modified User"
+			)
+			options
+			(
+				icon = "business-laptop-71"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -3
+					datablock1
+					(
+			 			layout type = -3
+						fields
+						(
+							Reporting_Date as "Reporting Date"
+							Faculty_Name as "Faculty Name"
+							Candidate_Name as "Candidate Name"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Number as "Task Number"
+							Comments
+							Task_Score as "Score"
+							Added_Time as "Added Time"
+							Modified_User as "Modified User"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Faculty_Name as "Faculty Name"
+							Candidate_Name as "Candidate Name"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Number as "Task Number"
+							Reporting_Date as "Reporting Date"
+							Comments
+							Task_Score as "Score"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+	section Manager_Evaluation_Reports
+	{
+		displayname= "Manager Evaluation Reports"
+		icon = "business-businessman-03"
+		default list All_Manager_Evaluation_Reports
+		{
+			displayName = "All Manager Evaluation Reports"
+   			hide = true
+			show all rows from Manager_Evaluation_Report    
+			(
+				Manager_Name  as "Manager Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Email
+				Candidate_Name  as "Candidate Name"
+	 			(
+	      			displayformat = [first_name1+""+prefix1+""+last_name1+""+suffix1]
+	 			)
+				Evaluation_Date as "Evaluation Date"
+				Week_Number as "Week Number"
+				Day_Number as "Day Number"
+				Task_Details as "Evaluation Comments"
+				Evaluation_Score as "Evaluation Score"
+			)
+			options
+			(
+				icon = "sport-cardio"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Manager_Name as "Manager Name"
+							Email
+							Candidate_Name as "Candidate Name"
+							Evaluation_Date as "Evaluation Date"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Evaluation_Score as "Evaluation Score"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Manager_Name as "Manager Name"
+							Email
+							Candidate_Name as "Candidate Name"
+							Evaluation_Date as "Evaluation Date"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Details as "Evaluation Comments"
+							Evaluation_Score as "Evaluation Score"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+		form Manager_Evaluation_Report
+		{
+			displayname = "Manager Evaluation Report"
+			success message = "Report Added Successfully"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have Manager_Name
+			(
+    			type = name
+				displayname = "Manager Name"
+     			prefix
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Email
+			(
+    			type = email
+				maxchar = 80
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Candidate_Name
+			(
+    			type = name
+				displayname = "Candidate Name"
+     			prefix1
+     			(
+	     			 type = prefix
+	     			 displayname ="Prefix"
+	     			 visibility = false
+	     			 value = {"Mr.","Mrs.","Ms."}
+     			) 
+     			first_name1
+     			(
+	     			 type = first_name
+	     			 displayname ="First Name"
+     			) 
+     			last_name1
+     			(
+	     			 type = last_name
+	     			 displayname ="Last Name"
+     			) 
+     			suffix1
+     			(
+	     			 type = suffix
+	     			 displayname ="Suffix"
+	     			 visibility = false
+     			) 
+	 			row = 1
+	 			column = 1   
+				width = medium
+				personal data = true
+			)
+			must have Evaluation_Date
+			(
+    			type = date
+				displayname = "Evaluation Date"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Week_Number
+			(
+				type = number
+				displayname = "Week Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the Week number where evaluation organized"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Day_Number
+			(
+				type = number
+				displayname = "Day Number"
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the Day number where evaluation organized"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Task_Details
+			(
+    			type = richtext
+				displayname = "Evaluation Comments"
+				height = 200px
+				toolbar = enable
+				[
+					style, font-color, background-color, alignment, link, table, bullets-and-numbering, 
+					font-size : {1, 2, 3, 4, 5, 6, 7},
+					font-family : {"Serif", "Arimo", "Ptmono", "Heuristica", "OpenSans", "Tinos", "Lato", "DejaVuSans", "ComicNeue", "EBGaramond", "RobotoCondensed", "ArchivoBlack", "Carlito"}
+				]
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Enter the Evaluation Comments"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have Evaluation_Score
+			(
+				type = number
+				displayname = "Evaluation Score"
+				initial value = 15
+    			description
+    			[
+    				type = tooltip
+    			 	message = "Give scores out of 15 with respect to evaluation criteria"
+    			]
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "education-books-46"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Submit"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Reset"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Update"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Cancel"
+					)
+				}
+			}
+		}
+		list Manager_Evaluation_Consolidate_Report
+		{
+			displayName = "Manager - Evaluation Consolidate Report"
+			show all rows from Manager_Evaluation_Report    
+			(
+				Manager_Name  as "Manager Name"
+	 			(
+	      			displayformat = [first_name+""+prefix+""+last_name+""+suffix]
+	 			)
+				Email
+				Candidate_Name  as "Candidate Name"
+	 			(
+	      			displayformat = [first_name1+""+prefix1+""+last_name1+""+suffix1]
+	 			)
+				Evaluation_Date as "Evaluation Date"
+				Week_Number as "Week Number"
+				Day_Number as "Day Number"
+				Task_Details as "Evaluation Comments"
+				Evaluation_Score as "Evaluation Score"
+				Added_Time as "Added Time"
+				Modified_User as "Modified User"
+				Modified_Time as "Modified Time"
+			)
+			options
+			(
+				icon = "education-books-46"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+						fields
+						(
+							Manager_Name as "Manager Name"
+							Email
+							Candidate_Name as "Candidate Name"
+							Evaluation_Date as "Evaluation Date"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Details as "Evaluation Comments"
+							Evaluation_Score as "Evaluation Score"
+							Added_Time as "Added Time"
+							Modified_User as "Modified User"
+							Modified_Time as "Modified Time"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Duplicate   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								Duplicate   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+						fields
+						(
+							Manager_Name as "Manager Name"
+							Email
+							Candidate_Name as "Candidate Name"
+							Evaluation_Date as "Evaluation Date"
+							Week_Number as "Week Number"
+							Day_Number as "Day Number"
+							Task_Details as "Evaluation Comments"
+							Evaluation_Score as "Evaluation Score"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Duplicate 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+	}
+
+
+
+
+		workflow
+		{
+		form
+		{
+			Send_Email_Form_Propertie as "Send Email - Form Properties"
+			{
+				type =  presuccess
+				form = Task_Entries
+				on start
+				{
+					actions 
+					{
+						sendmail
+						(
+							from : "zoho.adminuserid"
+							to : "zoho.adminuserid"
+							subject : "LearnPlus : New entry added"
+							message : "<div>Hello,<br><br>A new entry added in 'Task_Entries' form of LearnPlus application.<br></div>"
+						)
+					}
+				}
+			}
+			Send_Email_Form_Propertie1 as "Send Email - Form Properties"
+			{
+				type =  presuccess
+				form = Submit_Task
+				on start
+				{
+					actions 
+					{
+						sendmail
+						(
+							from : "zoho.adminuserid"
+							to : "zoho.adminuserid"
+							subject : "LearnPlus : New Task Submitted"
+							message : "<div>Hello,<br><br>A new entry added in 'Submit_Task' form of LearnPlus application.<br></div>"
+						)
+					}
+				}
+			}
+			Send_Email_Form_Propertie2 as "Send Email - Form Properties"
+			{
+				type =  presuccess
+				form = Evaluation_Report
+				on start
+				{
+					actions 
+					{
+						sendmail
+						(
+							from : "zoho.adminuserid"
+							to : "zoho.adminuserid"
+							subject : "LearnPlus : New entry added"
+							message : "Hello,<br/><br/>A new entry added in 'Evaluation Report' form of 'LearnPlus' application.<br/><br><br>"
+							attachments : template : _default as inline
+						)
+					}
+				}
+			}
+			Send_Email_Form_Propertie3 as "Send Email - Form Properties"
+			{
+				type =  presuccess
+				form = Manager_Evaluation_Report
+				on start
+				{
+					actions 
+					{
+						sendmail
+						(
+							from : "zoho.adminuserid"
+							to : "zoho.adminuserid"
+							subject : "LearnPlus : New entry added"
+							message : "Hello,<br/><br/>A new entry added in 'Manager Evaluation Report' form of 'LearnPlus' application.<br/>"
+							attachments : template : _default as inline
+						)
+					}
+				}
+			}
+		}
+
+
+
+
+
+	}
+	share_settings
+	{
+			"Read"
+			{
+				name = "Read"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have read permission for all components\n"
+			}
+			"Write"
+			{
+				name = "Write"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have write permission for all components\n"
+			}
+			"Faculty  Access"
+			{
+				name = "Faculty  Access"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Faculty  Access Profile\n"
+				ModulePermissions
+				{
+					Submit_Task
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Candidates={"View"}
+						}
+					}
+					Task_Entries
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Faculties={"View"}
+						}
+					}
+					Evaluation_Report
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Evaluation_Reports={"View","Edit"}
+						}
+					}
+					Task_Submissions
+					{
+						enabled = tab
+					}
+				}
+			}
+			"Administrator"
+			{
+				name = "Administrator"
+				type = Users_Permissions
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This profile will have all the permissions.\n"
+			}
+			"Manager Access"
+			{
+				name = "Manager Access"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Manager level access\n"
+				ModulePermissions
+				{
+					Submit_Task
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Candidates={"View"}
+						}
+					}
+					Task_Entries
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Faculties={"View"}
+						}
+					}
+					Evaluation_Report
+					{
+						enabled= Viewall,Export,read_comm,write_comm 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Consolidate_Report={"View"}
+						}
+					}
+					Manager_Evaluation_Report
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							Manager_Evaluation_Consolidate_Report={"View"}
+							All_Manager_Evaluation_Reports={"View","Edit"}
+						}
+					}
+					Task_Lists
+					{
+						enabled = tab
+					}
+					Task_Submissions
+					{
+						enabled = tab
+					}
+				}
+			}
+			"Candidate Access"
+			{
+				name = "Candidate Access"
+				type = Users_Permissions
+				permissions = {Chat:false, Predefined:false, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "Candidate Access Profile\n"
+				ModulePermissions
+				{
+					Submit_Task
+					{
+						enabled= Create,Tab 
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Candidates={"View"}
+						}
+					}
+					Task_Entries
+					{
+						allFieldsVisible= true 
+						ReportPermissions
+						{
+							All_Faculties={"View"}
+						}
+					}
+					Task_Lists
+					{
+						enabled = tab
+					}
+				}
+			}
+			"Customer"
+			{
+				name = "Customer"
+				type = Customer_Portal
+				permissions = {Chat:true, Predefined:true, ApiAccess:true, PIIAccess:true, ePHIAccess:true}
+				description = "This is the default profile having only add and view permission.\n"
+			}
+			roles
+			{
+				" Manager"
+				{
+					description = "User belonging to this role can access data of all other users."
+					"Faculty"
+					{
+						description = "Faculty Profile"
+						share data with peers = true
+						"Candidate"
+						{
+							description = "Candidate Profile"
+							share data with peers = true
+						}
+					}
+				}
+			}
+			Sharing_Rules
+			{
+				"TaskLists"
+				{
+					form = "Task_Entries"
+					sharedFromType = Roles
+					sharedToType = Roles
+					levelOfAccess = "Read"
+					sharedFrom = "Faculty"
+					sharedTo = "Candidate"
+				}
+				"Task Submission Info"
+				{
+					form = "Submit_Task"
+					sharedFromType = Roles
+					sharedToType = Roles
+					levelOfAccess = "Read"
+					sharedFrom = "Candidate"
+					sharedTo = "Faculty"
+				}
+			}
+	}
+
+	customize
+	{
+		
+		layout = "tab"
+		color = "black"
+		base theme = "professional"
+		new theme = 3
+		icons = true
+		icons style = outline
+		font = "lato"
+		color options
+    	{
+        color = "1"
+    	}
+    	logo
+    	{
+        	preference = "none"
+        	placement = "left"
+    	}
+	}
+
+
+	phone
+	{
+		customize
+		{
+        	layout = slidingpane
+		 	icons style = outline
+        	font = "default"
+            style = "3"
+        	color options
+        	{
+             	color = green
+         	}
+         	logo
+         	{
+             	preference = "none"
+         	}
+		}
+	}
+	tablet
+	{
+		customize
+		{
+        	layout = slidingpane
+		 	icons style = outline
+        	font = "default"
+            style = "3"
+        	color options
+        	{
+             	color = green
+         	}
+         	logo
+         	{
+             	preference = "none"
+         	}
+		}
+	}
+	
+}
